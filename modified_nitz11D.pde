@@ -25,7 +25,7 @@ SplashScreen:
 -added field imageY.
 
 -set image.x=imageX.
-set image.y=imageY;
+-set image.y=imageY;
 
 */
 
@@ -33,8 +33,8 @@ set image.y=imageY;
 /***  Class BaseShape                     ***/
 /********************************************/
 abstract class BaseShape {
-  public int x; //added for comfort.
-  public int y;// added for comfort.
+  public int x;
+  public int y;
     public color brush;
     public int alpha = 255;
   public color pen;
@@ -119,6 +119,20 @@ class Ellipse extends BaseShape {
   public color pen;
   public int penThickness;
 
+      //default constructor
+      public Ellipse()
+      {super(); }
+      
+      //parametric constructor
+     public Ellipse(int x, int y, int radiusX, int radiusY)
+   {
+     super();
+     this.x=x;
+     this.y=y;
+     this.radiusX=radiusX;
+     this.radiusY=radiusY;
+   }
+  
   protected void drawIt() {
     brush = (brush & 0xffffff) | (alpha << 24);
     pen = (pen & 0xffffff) | (alpha << 24);
@@ -257,6 +271,22 @@ class Image extends BaseShape {
   public int originalHeight = -1;
   public float alpha = 1;
 
+   //default constructor
+   public Image()
+   { super(); }
+ 
+   //parametric constructor
+   public Image(int x, int y, int width, int height, String path)
+   {
+     super();
+    this.x=x;
+    this.y=y;
+    this.height=height;
+    this.width=width;
+    setImage(path);
+
+  }
+  
   public String getPath() {
     return path;
   }
@@ -452,6 +482,32 @@ class Rect extends BaseShape {
   public int originalWidth = -1;
   public int originalHeight = -1;
 
+   //defualt constructor
+   public Rect()
+   { super(); }
+   
+   //parametric constructor
+   public Rect(int x, int y, int height, int width)
+   {
+    super();
+    this.x=x;
+    this.y=y;
+    this.height=height;
+    this.width=width;
+   }
+     
+    //parametric constructor including penThickness and color
+    public Rect(int x, int y, int height, int width, int penThickness,color c)
+   {
+    super();
+    this.x=x;
+    this.y=y;
+    this.height=height;
+    this.width=width;
+    this.penThickness=penThickness;
+    this.brush=c;
+   }
+
   protected void drawIt() {
     brush = (brush & 0xffffff) | (alpha << 24);
     pen = (pen & 0xffffff) | (alpha << 24);
@@ -502,6 +558,9 @@ class Rect extends BaseShape {
     height = (originalHeight*width)/originalWidth;
     //height -= 2;
   }
+  
+     public String toString()
+   { return "X: "+ x + ", Y: "+ y + ", height:" + this.height + ", width: " + this.width;   }
 }
 
 
@@ -511,8 +570,11 @@ class Rect extends BaseShape {
 /********************************************/
 class Text extends BaseShape {
 
+  //defualt constructor
   public Text()
   {super(); }
+  
+  //parametric constructor
   public Text(int x, int y, int textSize, String text, color c)
   {
     super();

@@ -1,63 +1,52 @@
-//initialize global objects
+//declaring global objects
 Text scoreText;
+Text fallenObjectsText;
 
-Image2 catcher;
-Image2 collectible; 
-Image2 heart;
-Image2 background;
-Image2 onCone;
+Image catcher; //the catching object
+Image collectible; //the caught object
+Image heart; //the representation of the life points
+Image backgroundImage; //the background image
+Image onCone; //the object used for drawing the icecream balls on the cone.
 
-Music caught=new Music();
-Music missed=new Music();
-     
-//initialize global variables
-String gameState="startScreen";
+Music caught; //sound effect for catching.
+Music missed; //sound effect for missing
+Music backgroundMusic; // background music
+  
+String gameState="startScreen"; // variables for determining the current game state.
 
-int xSpeed=0;
-int score=0;
-int lives=3;
-int startScreenTime;
-int winThreshold=10;
+//declaring global variables
+int score; //variable for tracking score
+int lives; //variable for tracking life points
+int xSpeed; //horizontal speed of the icecream cone
+int startScreenTime; //length of the start screen
+int threshold; //maximum number of falling objects
+int numberOfIcecreamDropped;
 
-
-boolean startScreenOn=true;
+boolean startScreenOn; //determines if the start screen should continue appearing
 
 void setup()
-{
-  startScreenTime=millis();
-  //setting canvas size.
-    size(800,600);
-  
-  //initialize objects.
-  catcher= new Image2(width/2,575,150,50,"cone.png");
-  collectible= new Image2(350,50,40,40,"ball1.png");
-  scoreText= new Text(30,30,15,"Score: 0   Lives: ", color(255,255,255));
-  heart= new Image2(80,25,30,30,"hearts.png"); 
-  background= new Image2(400,300,800,600,"background.png");  
-  caught= new Music();
-  caught.load("caught sound.mp3");
-  missed.load("missed sound.mp3");
-  
- 
-  //setting rect and image to be drawn from the center.
-  imageMode(CENTER);
-
-startSplash();
+{ 
+   //setting canvas size.
+   size(800,600);
+   
+   //calling the value initializer function
+  initializeValues();
 }
-
 
 void draw()
 {
+  //if 5 seconds has passed since the start screen appeared, start the game
   if (millis()>startScreenTime+5000 && startScreenOn)
   {
     startScreenOn=false;
-  gameState="game";
+    gameState="game";
   }
   
-  switch(gameState)
+  switch(gameState) //choosing what happends for each game state.
   {
    case "game":
    playGame();
+
    break;
    
    case "loseState":
@@ -70,5 +59,4 @@ void draw()
    winSplash();
    break;
   }
-  
-  }
+}

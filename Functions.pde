@@ -1,18 +1,46 @@
-
-/************************* void instantiateCollectible() **********************/
-void instantiateNewCollectible()
+//main game loop. in charge of running the game itself.
+void playGame()
 {
+  backgroundImage.draw();
+  scoreText.draw();
+  fallenObjectsText.draw();
+  catcher.draw();
+  
+  moveCatcher();
+  drawAndMoveCollectible();
+  detectCollision();
+
+  drawIcecream();
+  drawLives();
+  
+  detectWinOrLose();
+}
+
+/***************************************************************************/
+/***************************************************************************/
+/***************************************************************************/
+void instantiateNewCollectible() //creates a new collectible
+{
+  updateNumberOfBalls();
+
    if (collectible!=null)
    return;
    
+     //randomizing the color of the icecream ball and its horizontal spawn location
      String[] collectibles={"ball1.png","ball2.png","ball3.png","ball4.png","ball5.png"};
-   int x= clamp((int) (Math.random()*(width))+100,20,750);
-   int selection= (int) random(0,5);
-   System.out.println(selection);
-   collectible=new Image2(x,100,40,40,collectibles[selection]); 
+     int selection= (int) random(0,5);
+        
+     int x= clamp((int) (Math.random()*(width))+100,20,750);
+
+     collectible=new Image(x,100,40,40,collectibles[selection]); 
 }
 
-void collectibleMovementAndDrawing()
+/***************************************************************************/
+/***************************************************************************/
+/***************************************************************************/
+
+//drawing and moving the collectible object
+void drawAndMoveCollectible()
 {
   if (collectible==null)
   return;
@@ -21,24 +49,29 @@ void collectibleMovementAndDrawing()
      collectible.draw();
 }
 
-/**************************************************************************/
-/************************* void collisionDetection() **********************/
-void collisionDetection()
+/***************************************************************************/
+/***************************************************************************/
+/***************************************************************************/
+
+//checks for collision between collectible, the catcher and the bottom of the screen
+void detectCollision()
 {
    if (collectible==null)
    return; 
    
-
+  //variables for determening the current boundries of the collectible and the catcher
   int collectibleRight=collectible.x+collectible.width/2; //right edge of collectible
   int collectibleLeft= collectible.x-collectible.width/2; //left edge of collectible
   int collectibleBottom=collectible.y+collectible.height/2; //bottom edge of collectible
   int catcherRight =catcher.x+catcher.width/2; //right edge of catcher
   int catcherLeft= catcher.x-catcher.width/2; //left edge of catcher
   int catcherTop= catcher.y-catcher.height/2; //top edge of catcher
-//  int catcherBottom= catcher.y+catcher.height/2; //bottom edge of catcher
   
-  if (((collectibleRight>=catcherLeft&&collectibleRight<=catcherRight) || (collectibleLeft>=catcherLeft && collectibleLeft<=catcherRight))
-  &&collectibleBottom>=catcherTop)
+  //if the collectible is touching the catcher, destroy the collectible,
+  //update the score, play the caught sound effect and create new collectible.
+  if  (((collectibleRight>=catcherLeft&&collectibleRight<=catcherRight) 
+     || (collectibleLeft>=catcherLeft && collectibleLeft<=catcherRight))
+     && (collectibleBottom>=catcherTop))
   {
    collectible=null;
    instantiateNewCollectible();
@@ -46,7 +79,9 @@ void collisionDetection()
     caught.play();
   }
   
-  if (collectible.y>=height)
+  //else, if collectible has reached the bottom of the screen, destroy the collectible,
+  //update life points, play missed sound effect and create new collectible.
+  else if (collectible.y>=height)
   {
     collectible=null;
     updateLife(); 
@@ -55,14 +90,21 @@ void collisionDetection()
   }
 }
 
+/***************************************************************************/
+/***************************************************************************/
+/***************************************************************************/
+
+//moves the catcher across the screen, and won't let it move outside the screen
 void moveCatcher()
 { catcher.x= clamp(catcher.x+xSpeed, catcher.width/2, width-catcher.width/2);  } //<>//
 
+/***************************************************************************/
+/***************************************************************************/
+/***************************************************************************/
 
+//if an arrow key is pressed, check which one and change the value of xSpeed.
 void keyPressed()
 {
-  
-  
   switch(keyCode)
   {
     case RIGHT:
@@ -76,13 +118,14 @@ void keyPressed()
     case UP:
     xSpeed=0;
     break;
-    
-    
   }
-
 }
 
+/***************************************************************************/
+/***************************************************************************/
+/***************************************************************************/
 
+//clamps a value to be between a given minimum and maximum
 int clamp(int value, int min, int max)
 {
 if (value<=min)
@@ -95,100 +138,60 @@ else {}
 return value; 
 }
 
+/***************************************************************************/
+/***************************************************************************/
+/***************************************************************************/
 
-void startSplash()
+void initializeValues()
 {
-  SplashScreen splash= new SplashScreen();
-  splash.GameName="Ice-cream Scooper";
-  splash.backgroundColor= color(255,0,0);
-  splash.GameAuthor1="GUY";
-  splash.GameAuthor2="";
-  splash.GameAuthor3="";
-  splash.Image="obj.png";
-  Music muse= new Music();
-  muse.path="music.mp3";
-  splash.IntroMusic=muse;
-    splash.imageX=width/2;
-  splash.imageY=height/2;
-  splash.Show();
-}
-
-void loseSplash()
-{
-  SplashScreen splash= new SplashScreen();
-  splash.GameName="You lost!";
-  splash.backgroundColor= color(255,0,0);
-  splash.GameAuthor1="";
-  splash.GameAuthor2="";
-  splash.GameAuthor3="";
-  splash.Image="lose icecream.png";
-  Music muse= new Music();
-  muse.path="music.mp3";
-  splash.IntroMusic=muse;
-  splash.imageX=width/2;
-  splash.imageY=height/2;
-  splash.Show();
-}
-
-void winSplash()
-{
-  SplashScreen splash= new SplashScreen();
-  splash.GameName="You Won!";
-  splash.backgroundColor= color(255,0,0);
-  splash.GameAuthor1="Guy";
-  splash.GameAuthor2="";
-  splash.GameAuthor3="";
-  splash.Image="win icecream.png";
-  Music muse= new Music();
-  muse.path="music.mp3";
-  splash.IntroMusic=muse;
-    splash.imageX=width/2;
-  splash.imageY=height/2;
-    drawWinIcecrem();
-  splash.Show();
-      drawWinIcecrem();
-
- 
-}
-
-void drawWinIcecrem()
-{
-  int middleX=width/2;
-  int middleY=(height/2);
+  //initialize objects.
+   scoreText= new Text(30,30,15,"Score: 0   Lives: ", color(0));
+   fallenObjectsText=new Text(30,50,15,"Fallen ice-cream balls: 1", color(0));
+    
+  catcher= new Image(width/2,550,150,50,"cone.png");
+  collectible= new Image(350,50,40,40,"ball1.png");
+  heart= new Image(80,25,30,30,"hearts.png"); 
+  backgroundImage= new Image(400,300,800,600,"background.png");  
   
-    onCone= new Image2(middleX,middleY,150,50,"cone.png");
-    onCone.draw();
-     onCone=new Image2(middleX,middleY-55,40,40,"icecream3.png");
-       onCone.draw();
-    onCone= new Image2(middleX+25,middleY-55,40,40,"icecream2.png");
-  onCone.draw();
-  onCone=new Image2(middleX-25,middleY-55,40,40,"icecream4.png");
-  onCone.draw();
-     onCone= new Image2(middleX,middleY-35,40,40,"icecream1.png");
- onCone.draw();
- onCone= new Image2(middleX-40,middleY-35,40,40,"icecream2.png");
- onCone.draw();
-  onCone= new Image2(middleX+40,middleY-35,40,40,"icecream3.png");
- onCone.draw();
-  onCone= new Image2(middleX+25,middleY-30,40,40,"icecream4.png");
- onCone.draw();
-  onCone= new Image2(middleX-25,middleY-30,40,40,"icecream5.png");
- onCone.draw();
-   onCone= new Image2(middleX-20,middleY-100,40,80,"fireworks.png");
-  onCone.rotation=-30;
-  onCone.draw();
-   onCone= new Image2(middleX,middleY-90,75,70,"whippedcream.png");
-  onCone.draw();
+  missed= new Music();
+  caught= new Music();
+  backgroundMusic= new Music();
+ 
+  caught.load("caught sound.mp3");
+  missed.load("missed sound2.mp3");
+ 
+  backgroundMusic.load("background music2.mp3");
+  backgroundMusic.loop=true;
+  backgroundMusic.play();
+  
+  //initialize variables
+   score=0;
+   lives=3;
+   xSpeed=0;
+   threshold=10;
+   startScreenTime=millis();
+   numberOfIcecreamDropped=1;
+
+    startScreenOn=true;
+ 
+  //setting image to be drawn from the center.
+  imageMode(CENTER);
+
+  startSplash(); 
 }
 
-void playGame()
+/***************************************************************************/
+/***************************************************************************/
+/***************************************************************************/
+
+void detectWinOrLose()
 {
-  background.draw();
-  moveCatcher();
-  collectibleMovementAndDrawing();
-  collisionDetection();
-  scoreText.draw();
-  catcher.draw();
-  drawIcecream();
-  drawLives();
+   if (numberOfIcecreamDropped>=10)
+  {
+    if (score>=7)
+    gameState="winState";
+    
+    else
+    gameState=("lostState");
+  } 
 }
