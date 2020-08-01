@@ -144,15 +144,17 @@ void winSplash()
   splash.IntroMusic=muse;
     splash.imageX=width/2;
   splash.imageY=height/2;
+    drawWinIcecrem();
   splash.Show();
-  //drawWinIcecrem();
+      drawWinIcecrem();
+
  
 }
 
 void drawWinIcecrem()
 {
   int middleX=width/2;
-  int middleY=(height/2)+150;
+  int middleY=(height/2);
   
     onCone= new Image2(middleX,middleY,150,50,"cone.png");
     onCone.draw();

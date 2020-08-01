@@ -11,12 +11,15 @@ Music caught=new Music();
 Music missed=new Music();
      
 //initialize global variables
+String gameState="startScreen";
+
 int xSpeed=0;
 int score=0;
 int lives=3;
-int winThreshold=10;
-String gameState="startScreen";
 int startScreenTime;
+int winThreshold=10;
+
+
 boolean startScreenOn=true;
 
 void setup()

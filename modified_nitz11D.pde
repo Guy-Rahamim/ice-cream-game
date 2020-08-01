@@ -19,6 +19,14 @@ Ellipse:
 
 Text:
 -added p.constructor
+
+SplashScreen:
+-added field imageX.
+-added field imageY.
+
+-set image.x=imageX.
+set image.y=imageY;
+
 */
 
 /********************************************/
