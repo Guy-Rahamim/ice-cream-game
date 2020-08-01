@@ -1,10 +1,14 @@
 //initialize global objects
 Text scoreText;
+
 Image2 catcher;
 Image2 collectible; 
 Image2 heart;
 Image2 background;
 Image2 onCone;
+
+Music caught=new Music();
+Music missed=new Music();
      
 //initialize global variables
 int xSpeed=0;
@@ -27,6 +31,10 @@ void setup()
   scoreText= new Text(30,30,15,"Score: 0   Lives: ", color(255,255,255));
   heart= new Image2(80,25,30,30,"hearts.png"); 
   background= new Image2(400,300,800,600,"background.png");  
+  caught= new Music();
+  caught.load("caught sound.mp3");
+  missed.load("missed sound.mp3");
+  
  
   //setting rect and image to be drawn from the center.
   imageMode(CENTER);

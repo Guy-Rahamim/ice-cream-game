@@ -15,8 +15,6 @@ void updateLife()
   
   if (lives<=0)
   gameState="loseState";
-  
-
 }
 
 void drawLives()
@@ -77,7 +75,6 @@ void drawIcecream()
  onCone.draw();
   onCone= new Image2(catcher.x-25,catcher.y-30,40,40,"icecream5.png");
  onCone.draw();
-
    
  }
   

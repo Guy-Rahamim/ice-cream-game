@@ -908,7 +908,8 @@ class SplashScreen
   public String GameAuthor2;
   public String GameAuthor3;
   public Music IntroMusic;
-
+  public int imageX;
+  public int imageY;
   private int time;
 
   public SplashScreen()
@@ -918,12 +919,13 @@ class SplashScreen
   public void Show()
   {
     Rect window = new Rect();
-    window.width = 650;
-    window.height = 480;
+    window.width = width;
+    window.height = height;
     window.x = (width - window.width)/2;
     window.y = (height - window.height)/2;
     window.brush = backgroundColor;
     window.alpha = 80;
+    
 
     Text gameName = new Text();
     gameName.text = GameName;
@@ -950,8 +952,8 @@ class SplashScreen
 
     Image image = new Image();
     image.setImage(Image);
-    image.x=window.x+350;
-    image.y = window.y+150;
+    image.x=imageX;
+    image.y= imageY;
 
     if ( millis() < time + 5000) {
       window.draw();
@@ -965,7 +967,7 @@ class SplashScreen
     if (height<1024 && width<600)
     {
     }
-    println(width);
+  //  println(width);
   }
 }
 
