@@ -132,7 +132,8 @@ void winSplash()
 
 void playGame()
 {
-    background(100);
+    background.draw();
+   // background(100);
   moveCatcher();
   collectibleMovementAndDrawing();
   collisionDetection();

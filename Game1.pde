@@ -22,13 +22,13 @@ void setup()
     size(800,600);
   
   //initialize objects.
-  catcher= new Image2(width/2,600,150,50,"cone.png");
+  catcher= new Image2(width/2,575,150,50,"cone.png");
   collectible= new Image2(350,50,40,40,"ball1.png");
   scoreText= new Text(30,30,15,"Score: 0   Lives: ", color(255,255,255));
   heart= new Image2(80,25,30,30,"hearts.png"); 
-  background= new Image2(0,0,600,800,"background.png");  
+  background= new Image2(400,300,800,600,"background.png");  
+ 
   //setting rect and image to be drawn from the center.
-  rectMode(CENTER);
   imageMode(CENTER);
 
 startSplash();
