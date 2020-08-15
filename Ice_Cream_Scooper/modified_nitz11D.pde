@@ -6,28 +6,28 @@
 
 /*
 changes:
-
-BaseShape:
--added field x.
--added field y.
-
-Rect:
--added p.constructor
-
-Ellipse:
--added p.constructor
-
-Text:
--added p.constructor
-
-SplashScreen:
--added field imageX.
--added field imageY.
-
--set image.x=imageX.
--set image.y=imageY;
-
-*/
+ 
+ BaseShape:
+ -added field x.
+ -added field y.
+ 
+ Rect:
+ -added p.constructor
+ 
+ Ellipse:
+ -added p.constructor
+ 
+ Text:
+ -added p.constructor
+ 
+ SplashScreen:
+ -added field imageX.
+ -added field imageY.
+ 
+ -set image.x=imageX.
+ -set image.y=imageY;
+ 
+ */
 
 /********************************************/
 /***  Class BaseShape                     ***/
@@ -35,11 +35,11 @@ SplashScreen:
 abstract class BaseShape {
   public int x;
   public int y;
-    public color brush;
-    public int alpha = 255;
+  public color brush;
+  public int alpha = 255;
   public color pen;
   public int penThickness;
-  
+
   public float rotation = 0;
   abstract protected int getX();
   abstract protected int getY();
@@ -119,20 +119,22 @@ class Ellipse extends BaseShape {
   public color pen;
   public int penThickness;
 
-      //default constructor
-      public Ellipse()
-      {super(); }
-      
-      //parametric constructor
-     public Ellipse(int x, int y, int radiusX, int radiusY)
-   {
-     super();
-     this.x=x;
-     this.y=y;
-     this.radiusX=radiusX;
-     this.radiusY=radiusY;
-   }
-  
+  //default constructor
+  public Ellipse()
+  {
+    super();
+  }
+
+  //parametric constructor
+  public Ellipse(int x, int y, int radiusX, int radiusY)
+  {
+    super();
+    this.x=x;
+    this.y=y;
+    this.radiusX=radiusX;
+    this.radiusY=radiusY;
+  }
+
   protected void drawIt() {
     brush = (brush & 0xffffff) | (alpha << 24);
     pen = (pen & 0xffffff) | (alpha << 24);
@@ -271,22 +273,23 @@ class Image extends BaseShape {
   public int originalHeight = -1;
   public float alpha = 1;
 
-   //default constructor
-   public Image()
-   { super(); }
- 
-   //parametric constructor
-   public Image(int x, int y, int width, int height, String path)
-   {
-     super();
+  //default constructor
+  public Image()
+  { 
+    super();
+  }
+
+  //parametric constructor
+  public Image(int x, int y, int width, int height, String path)
+  {
+    super();
     this.x=x;
     this.y=y;
     this.height=height;
     this.width=width;
     setImage(path);
-
   }
-  
+
   public String getPath() {
     return path;
   }
@@ -388,7 +391,6 @@ class Line extends BaseShape {
   protected int getY() {
     return y1;
   }
-  
 }
 
 
@@ -482,23 +484,25 @@ class Rect extends BaseShape {
   public int originalWidth = -1;
   public int originalHeight = -1;
 
-   //defualt constructor
-   public Rect()
-   { super(); }
-   
-   //parametric constructor
-   public Rect(int x, int y, int height, int width)
-   {
+  //defualt constructor
+  public Rect()
+  { 
+    super();
+  }
+
+  //parametric constructor
+  public Rect(int x, int y, int height, int width)
+  {
     super();
     this.x=x;
     this.y=y;
     this.height=height;
     this.width=width;
-   }
-     
-    //parametric constructor including penThickness and color
-    public Rect(int x, int y, int height, int width, int penThickness,color c)
-   {
+  }
+
+  //parametric constructor including penThickness and color
+  public Rect(int x, int y, int height, int width, int penThickness, color c)
+  {
     super();
     this.x=x;
     this.y=y;
@@ -506,7 +510,7 @@ class Rect extends BaseShape {
     this.width=width;
     this.penThickness=penThickness;
     this.brush=c;
-   }
+  }
 
   protected void drawIt() {
     brush = (brush & 0xffffff) | (alpha << 24);
@@ -558,9 +562,11 @@ class Rect extends BaseShape {
     height = (originalHeight*width)/originalWidth;
     //height -= 2;
   }
-  
-     public String toString()
-   { return "X: "+ x + ", Y: "+ y + ", height:" + this.height + ", width: " + this.width;   }
+
+  public String toString()
+  { 
+    return "X: "+ x + ", Y: "+ y + ", height:" + this.height + ", width: " + this.width;
+  }
 }
 
 
@@ -572,8 +578,10 @@ class Text extends BaseShape {
 
   //defualt constructor
   public Text()
-  {super(); }
-  
+  {
+    super();
+  }
+
   //parametric constructor
   public Text(int x, int y, int textSize, String text, color c)
   {
@@ -722,7 +730,7 @@ class SpriteSheet extends Image {
       img.width= width;
     if (height>0)
       img.height = height;
-	width = img.width;
+    width = img.width;
     height = img.height;  
     img.draw();
     x += this.advanceSpeedX();
@@ -908,7 +916,7 @@ class DynamicBackground {
       }
     }
   }
-  
+
   void draw() { 
     node1.background.draw();
     node2.background.draw();
@@ -995,7 +1003,7 @@ class SplashScreen
     window.y = (height - window.height)/2;
     window.brush = backgroundColor;
     window.alpha = 80;
-    
+
 
     Text gameName = new Text();
     gameName.text = GameName;
@@ -1037,7 +1045,7 @@ class SplashScreen
     if (height<1024 && width<600)
     {
     }
-  //  println(width);
+    //  println(width);
   }
 }
 

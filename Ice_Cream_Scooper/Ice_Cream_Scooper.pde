@@ -11,7 +11,7 @@ Image onCone; //the object used for drawing the icecream balls on the cone.
 Music caught; //sound effect for catching.
 Music missed; //sound effect for missing
 Music backgroundMusic; // background music
-  
+
 String gameState="startScreen"; // variables for determining the current game state.
 
 //declaring global variables
@@ -24,14 +24,22 @@ int numberOfIcecreamDropped;
 
 boolean startScreenOn; //determines if the start screen should continue appearing
 
+/***************************************************************************/
+/***************************************************************************/
+/***************************************************************************/
+
 void setup()
 { 
-   //setting canvas size.
-   size(800,600);
-   
-   //calling the value initializer function
+  //setting canvas size.
+  size(800, 600);
+
+  //calling the value initializer function
   initializeValues();
 }
+
+/***************************************************************************/
+/***************************************************************************/
+/***************************************************************************/
 
 void draw()
 {
@@ -41,22 +49,22 @@ void draw()
     startScreenOn=false;
     gameState="game";
   }
-  
+
   switch(gameState) //choosing what happends for each game state.
   {
-   case "game":
-   playGame();
+  case "game":
+    playGame();
 
-   break;
-   
-   case "loseState":
-   background(100);
-   loseSplash();
-   break;
-   
-   case "winState":
-   background(100);
-   winSplash();
-   break;
+    break;
+
+  case "loseState":
+    background(100);
+    loseSplash();
+    break;
+
+  case "winState":
+    background(100);
+    winSplash();
+    break;
   }
 }
