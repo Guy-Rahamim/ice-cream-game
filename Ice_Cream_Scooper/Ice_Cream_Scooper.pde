@@ -2,6 +2,8 @@
 Text scoreText;
 Text fallenObjectsText;
 
+boolean secretCheatFlag;
+
 Image catcher; //the catching object
 Image collectible; //the caught object
 Image heart; //the representation of the life points
@@ -20,7 +22,10 @@ int lives; //variable for tracking life points
 int xSpeed; //horizontal speed of the icecream cone
 int startScreenTime; //length of the start screen
 int threshold; //maximum number of falling objects
-int numberOfIcecreamDropped;
+int numberOfIcecreamDropped; // number of catched objects.
+int difficultyMultiplier; // speed multiplier for catcher and collectibles.
+int superCheatIndex; //handles super cheat input.
+int heartCheatIndex; // handles heart cheat input
 
 boolean startScreenOn; //determines if the start screen should continue appearing
 
@@ -35,6 +40,7 @@ void setup()
 
   //calling the value initializer function
   initializeValues();
+
 }
 
 /***************************************************************************/
@@ -43,13 +49,8 @@ void setup()
 
 void draw()
 {
-  //if 5 seconds has passed since the start screen appeared, start the game
-  if (millis()>startScreenTime+5000 && startScreenOn)
-  {
-    startScreenOn=false;
-    gameState="game";
-  }
-
+  drawMenu();
+  
   switch(gameState) //choosing what happends for each game state.
   {
   case "game":

@@ -4,7 +4,7 @@ void drawAndMoveCollectible()
   if (collectible==null)
     return;
 
-  collectible.y+=6.5;
+  collectible.y+=6.5 * difficultyMultiplier;
   collectible.draw();
 }
 
@@ -14,7 +14,15 @@ void drawAndMoveCollectible()
 
 //moves the catcher across the screen, and won't let it move outside the screen
 void moveCatcher()
-{   catcher.x= clamp(catcher.x+xSpeed, catcher.width/2, width-catcher.width/2);  }
+{   
+if (!secretCheatFlag)
+catcher.x= clamp(catcher.x+xSpeed * difficultyMultiplier, catcher.width/2, width-catcher.width/2); 
+
+else 
+{
+  catcher.x= collectible.x;
+}
+}
 
 /***************************************************************************/
 /***************************************************************************/
@@ -181,4 +189,59 @@ void winSplash()
   splash.imageX=width/2;
   splash.imageY=height/2;
   splash.Show();
+}
+
+void drawMenu()
+{
+  Text start= new Text();
+  start.x=75;
+  start.y=400;
+  start.text="Start";
+  start.brush=color(0);
+  start.textSize=35;
+
+  
+  Rect startBack = new Rect(70,360,60,90);
+  startBack.brush=color(100,100,100);
+  startBack.draw();
+  start.draw();
+
+  
+  
+  Text exit= new Text();
+  
+  exit.x=80;
+  exit.y=500;
+  exit.text="Exit";
+  exit.brush= color(0);
+  exit.textSize=35;
+
+  
+  
+  Rect exitBack= new Rect(70,460,60,90);
+  exitBack.brush=color(100,100,100);
+  
+    exitBack.draw();
+    exit.draw();
+
+  
+  if (startBack.pointInShape(mouseX,mouseY))
+  { 
+    if (mousePressed)
+    {
+    startScreenOn=false;
+    gameState="game";
+    }
+  }
+  
+  if (exitBack.pointInShape(mouseX,mouseY))
+  {
+    if (mousePressed)
+    exit();
+  }
+
+  
+  
+  
+  
 }

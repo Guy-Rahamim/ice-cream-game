@@ -28,6 +28,10 @@ void initializeValues()
   threshold=10;
   startScreenTime=millis();
   numberOfIcecreamDropped=1;
+  difficultyMultiplier=1;
+  superCheatIndex=1;
+  heartCheatIndex=1;
+  secretCheatFlag= false;
 
   startScreenOn=true;
 
@@ -57,6 +61,9 @@ void playGame()
   drawLives();
 
   detectWinOrLose();
+  
+  handleDifficulty();
+  handleCheatCode();
 }
 
 /***************************************************************************/
@@ -174,4 +181,41 @@ void detectWinOrLose()
     else
       gameState=("lostState");
   }
+}
+
+void handleDifficulty()
+{
+  if (score>=5)
+  difficultyMultiplier=1;
+}
+
+void handleCheatCode()
+{
+  char[] heartCheat = {'h','e','a','r','t'};
+
+  //handle super cheat code.
+  char[] superCheat = {'s','t','a','r','t','e','c','h'};
+  
+   if (!(superCheatIndex>=superCheat.length+1))
+ {
+  if (key==superCheat[superCheatIndex-1])
+  superCheatIndex++;
+ }
+ 
+   if (superCheatIndex>=superCheat.length+1)
+    secretCheatFlag=true;
+ 
+ 
+ 
+ //handle heart cheat code.
+  if (key==heartCheat[heartCheatIndex-1])
+  heartCheatIndex++;
+  
+  if (heartCheatIndex>=heartCheat.length+1)
+  {
+    System.out.println("lives added");
+    lives+=1;
+    heartCheatIndex=1;
+  }
+  
 }
